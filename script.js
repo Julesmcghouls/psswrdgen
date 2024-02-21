@@ -7,13 +7,13 @@ const numberEl = document.getElementById("number");
 const symbolEl = document.getElementById("symbol");
 const generateEl = document.getElementById("generate");
 
-let upperLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let lowerLetters = "abcdefghijklmnopqrstuvwxyz";  
-let numbers = "0123456789";
-let symbols = "!@#$%^&*()_+";
+const upperLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const lowerLetters = "abcdefghijklmnopqrstuvwxyz";
+const numbers = "0123456789";
+const symbols = "!@#$%^&*()_+=";
 
 function getLowercase() {
-  return lowerLetters[Math.floor(Math.random() * lowerLetters.length)];
+    return lowerLetters[Math.floor(Math.random() * lowerLetters.length)];
 }
 
 function getUppercase() {
@@ -29,46 +29,71 @@ function getSymbol() {
 }
 
 function generatePassword() {
-    const len = parseInt(lenEl.value);
-    const options = {
-        upper: upperEl.checked,
-        lower: lowerEl.checked,
-        number: numberEl.checked,
-        symbol: symbolEl.checked
-    };
+    const len = lenEl.value;
 
-    const password = buildPassword(len, options);
+    let password = "";
+
+    if (upperEl.checked) {
+        password += getUppercase();
+    }
+
+    if (lowerEl.checked) {
+        password += getLowercase();
+    }
+
+    if (numberEl.checked) {
+        password += getNumber();
+    }
+
+    if (symbolEl.checked) {
+        password += getSymbol();
+    }
+
+    for (let i = password.length; i < len; i++) {
+        const x = generateX();
+        password += x;
+    }
+
     pwEl.innerText = password;
 }
 
-function buildPassword(length, options) {
-    
-    let password = "";
-
-    for (const [key, value] of Object.entries(options)) {
-        if (value) {
-            const generatorFunction = generators[key];
-            password += generatorFunction();
-        }
+function generateX() {
+    const xs = [];
+    if (upperEl.checked) {
+        xs.push(getUppercase());
     }
 
-    const remainingLength = length - password.length;
-    for (let i = 0; i < remainingLength; i++) {
-        const randomGenerator = getRandomGenerator();
-        password += randomGenerator();
+    if (lowerEl.checked) {
+        xs.push(getLowercase());
     }
 
-    return password;
-}
-function getRandomGenerator() {
-    const generatorsArray = Object.values(generators);
-    const randomIndex = Math.floor(Math.random() * generatorsArray.length);
-    return generatorsArray[randomIndex];
+    if (numberEl.checked) {
+        xs.push(getNumber());
+    }
+
+    if (symbolEl.checked) {
+        xs.push(getSymbol());
+    }
+
+    if (xs.length === 0) return "";
+
+    return xs[Math.floor(Math.random() * xs.length)];
 }
 
-const generators = {
-    upper: getUppercase,
-    lower: getLowercase,
-    number: getNumber,
-    symbol: getSymbol
-};
+generateEl.addEventListener("click", generatePassword);
+
+copyEl.addEventListener("click", () => {
+    const textarea = document.createElement("textarea");
+    const password = pwEl.innerText;
+
+    if (!password) {
+        return;
+    }
+
+    textarea.value = password;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+    alert("Password copied to clipboard");
+});
