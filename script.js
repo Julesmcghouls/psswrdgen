@@ -29,11 +29,14 @@ function getSymbol() {
 }
 
 function generatePassword() {
-    const len = lenEl.value;
+    const len = parseInt(lenEl.value);
+    const options = {
+        upper: upperEl.checked,
+        lower: lowerEl.checked,
+        number: numberEl.checked,
+        symbol: symbolEl.checked
+    };
 
-    let password = "";
-
-    if (upperEl.checked) {
-        password += getUppercase();
-    }
+    const password = buildPassword(len, options);
+    pwEl.innerText = password;
 }
