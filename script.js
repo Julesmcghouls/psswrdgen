@@ -65,3 +65,10 @@ function getRandomGenerator() {
     const randomIndex = Math.floor(Math.random() * generatorsArray.length);
     return generatorsArray[randomIndex];
 }
+
+const generators = {
+    upper: getUppercase,
+    lower: getLowercase,
+    number: getNumber,
+    symbol: getSymbol
+};
