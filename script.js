@@ -33,7 +33,7 @@ function generatePassword() {
 
     let password = "";
 
-    if () {
+    if (upperEl.checked) {
         password += getUppercase();
     }
 }
