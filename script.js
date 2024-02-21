@@ -60,6 +60,8 @@ function buildPassword(length, options) {
 
     return password;
 }
-
-
+function getRandomGenerator() {
+    const generatorsArray = Object.values(generators);
+    const randomIndex = Math.floor(Math.random() * generatorsArray.length);
+    return generatorsArray[randomIndex];
 }
