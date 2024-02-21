@@ -40,3 +40,17 @@ function generatePassword() {
     const password = buildPassword(len, options);
     pwEl.innerText = password;
 }
+
+function buildPassword(length, options) {
+    
+    let password = "";
+
+    for (const [key, value] of Object.entries(options)) {
+        if (value) {
+            const generatorFunction = generators[key];
+            password += generatorFunction();
+        }
+    }
+
+
+}
