@@ -21,4 +21,10 @@ function getSymbol() {
 
 function generatePassword() {
 
+
+    let password = "";
+
+    if () {
+        password += getUppercase();
+    }
 }
