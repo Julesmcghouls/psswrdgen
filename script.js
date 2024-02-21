@@ -52,5 +52,14 @@ function buildPassword(length, options) {
         }
     }
 
+    const remainingLength = length - password.length;
+    for (let i = 0; i < remainingLength; i++) {
+        const randomGenerator = getRandomGenerator();
+        password += randomGenerator();
+    }
+
+    return password;
+}
+
 
 }
