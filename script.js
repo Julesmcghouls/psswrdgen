@@ -29,7 +29,7 @@ function getSymbol() {
 }
 
 function generatePassword() {
-
+    const len = lenEl.value;
 
     let password = "";
 
